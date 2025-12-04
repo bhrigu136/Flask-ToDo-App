@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}Your Tasks{% endblock %}
+
+{% block content %}
+<div class="task-box">
+    <h2>Your Tasks</h2>
+
+    <!-- Add Task Form -->
+    <form action="{{ url_for('tasks.add_task') }}" method="post" class="task-form">
+        <input type="text" name="title" placeholder="Task Title" required>
+
+        <select name="priority">
+            <option value="Low"   {% if priority_filter == 'Low' %}selected{% endif %}>Low</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="High">High</option>
+        </select>
+
+        <input type="date" name="deadline">
+        <input type="time" name="time_slot" placeholder="HH:MM">
+
+
+        <button type="submit" class="btn">Add</button>
+    </form>
+
+    <!-- Filters / Search -->
+    <form method="GET" action="{{ url_for('tasks.view_tasks') }}" class="filter-form">
+        <input type="text" name="q" placeholder="Search..." value="{{ search or '' }}">
+
+        <select name="status" onchange="this.form.submit()">
+            <option value="all"      {% if status_filter == 'all' %}selected{% endif %}>All Status</option>
+            <option value="Pending"  {% if status_filter == 'Pending' %}selected{% endif %}>Pending</option>
+            <option value="Working"  {% if status_filter == 'Working' %}selected{% endif %}>Working</option>
+            <option value="Completed"{% if status_filter == 'Completed' %}selected{% endif %}>Completed</option>
+        </select>
+
+        <select name="priority" onchange="this.form.submit()">
+            <option value="all"      {% if priority_filter == 'all' %}selected{% endif %}>All Priority</option>
+            <option value="Low"      {% if priority_filter == 'Low' %}selected{% endif %}>Low</option>
+            <option value="Medium"   {% if priority_filter == 'Medium' %}selected{% endif %}>Medium</option>
+            <option value="High"     {% if priority_filter == 'High' %}selected{% endif %}>High</option>
+        </select>
+
+        <button type="submit" class="btn-small">Apply</button>
+    </form>
+
+    {% if tasks %}
+    <form method="POST" action="{{ url_for('tasks.clear_tasks') }}">
+        <button type="submit" class="btn btn-clear">Clear All Tasks</button>
+    </form>
+
+    <br>
+
+    <table class="task-table">
+        <thead>
+        <tr>
+            <th>Task</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Deadline</th>
+            <th>Time Slot</th>
+            <th>Change</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.title }}</td>
+
+                <td>
+                    <span class="badge
+                        {% if task.status == 'Pending' %} badge-pending
+                        {% elif task.status == 'Working' %} badge-working
+                        {% elif task.status == 'Completed' %} badge-done
+                        {% endif %}
+                    ">
+                        {{ task.status }}
+                    </span>
+                </td>
+
+                <td>
+                    <span class="badge
+                        {% if task.priority == 'Low' %} badge-low
+                        {% elif task.priority == 'Medium' %} badge-medium
+                        {% else %} badge-high
+                        {% endif %}
+                    ">
+                        {{ task.priority }}
+                    </span>
+                </td>
+
+                <td>
+                    {% if task.deadline %}
+                        {{ task.deadline.strftime('%d %b %Y') }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+
+                <td>
+                    {% if task.time_slot %}
+                        {{ task.time_slot.strftime('%I:%M %p') }}
+                    {% else %}
+                        
+                    {% endif %}
+                </td>
+
+                <td>
+                    <form action="{{ url_for('tasks.toggle_status', task_id=task.id) }}" method="POST">
+                        <button class="btn-small" type="submit">Next</button>
+                    </form>
+                </td>
+
+                <td>
+                    <form action="{{ url_for('tasks.delete_task', task_id=task.id) }}" method="POST">
+                        <button class="btn-small btn-delete" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+        <p>No tasks available. Add a new task above.</p>
+    {% endif %}
+</div>
+{% endblock %}
