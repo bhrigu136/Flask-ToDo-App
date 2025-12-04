@@ -1,35 +1,61 @@
 # 📝 Flask To-Do App (User Auth + Priority + Deadlines + Search & Filter)
 
-A complete To-Do task manager web application built using Flask.  
-It includes secure authentication, task priority management, deadline selection, task search, filters, and status tracking for each user.
+A full-stack task management application built using **Flask**, featuring user authentication, task organization, priority management, deadlines, filters, and time slot scheduling.  
+The application is fully deployed and live on the internet.
+
+---
+
+## 🚀 Live Demo
+
+🔗 https://flask-todo-app-9fms.onrender.com
+
+> Register a new user and start managing your tasks instantly.
 
 ---
 
 ## ✨ Features
 
-### 👤 User Authentication
-- User registration and login system
-- Password hashing (safe storage, no plain text)
-- Logout functionality
-- Each user sees only **their own tasks**
+✔ User register & login system  
+✔ Add tasks with:
+- Title  
+- Priority (High / Medium / Low)  
+- Deadline (date)  
+- Time Slot (HH:MM AM/PM)  
+- Status (Pending → Working → Completed)
 
-### ✔ Task Management
-- Add new tasks
-- Delete individual tasks
-- Clear all tasks for a user
-- Change task status (Pending → Working → Completed)
-- Automatic created date storage
+✔ Filter tasks by:
+- Status  
+- Priority  
+- Search text
 
-### 🏷 Task Attributes
-- Priority (Low / Medium / High)
-- Optional deadline (date)
-- Visual badge colors for task status & priority
+✔ Change task status using **Next** button  
+✔ Delete individual tasks  
+✔ Clear all tasks  
+✔ Flash message notifications  
+✔ Responsive UI with custom CSS styling  
+✔ SQLite database with SQLAlchemy ORM  
+✔ Deployed using Gunicorn on Render
 
-### 🔍 Search & Filter
-- Search tasks by name
-- Filter by status
-- Filter by priority
-- Combine both filters together
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+- Python 3
+- Flask
+- SQLAlchemy
+- Flask-Login
+
+### Frontend
+- HTML5
+- CSS3
+- Jinja2 Template Engine
+
+### Deployment
+- Render.com
+- Gunicorn
+- Requirements.txt
+- Procfile
 
 ---
 
@@ -102,11 +128,21 @@ http://127.0.0.1:5000/
 ```
 
 ---
+## 🧩 Future Enhancements
+
+- Edit Task modal
+- PostgreSQL DB
+- Email reminders
+- CSV export
+- Dark mode UI
+
+---
 
 ## ✍️ Author
 
 **Tamanna Bhrigunath**  
 B.Tech – Poornima College of Engineering (2026)
+Python & Data Science Enthusiast
 
 - 💻 GitHub: https://github.com/bhrigu136  
 - 🔗 LinkedIn: https://linkedin.com/in/tamanna-bhrigunath-578b43190  
