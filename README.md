@@ -1,15 +1,3 @@
-You don’t need *another* fluffy README. You need one that actually **matches what the project does today**, not what you *think* it does.
-
-Your current README is **outdated and undersells the strongest part of this app**:
-👉 **Google Calendar sync + inline edit + per-user isolation**.
-That’s the differentiator. Right now it’s buried.
-
-Below is a **clean, honest, production-ready README.md** you can directly replace in your repo.
-It reflects the **actual codebase you shared**  — no lies, no filler.
-
----
-
-##  FINAL README.md (Ready to Paste)
 
 ```md
 # Flask To-Do App with Google Calendar Sync
