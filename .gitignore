@@ -1,0 +1,23 @@
+# .gitignore
+
+# Python
+__pycache__/
+*.pyc
+*.py[cod]
+
+# Virtual environment
+.venv/
+venv/
+
+# Environment variables
+.env
+
+# Database
+instance/
+*.db
+todo.db
+
+# Secrets (VERY IMPORTANT)
+client_secret_*.json
+*_client_secret.json
+*.json

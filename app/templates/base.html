@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}To-Do App{% endblock %}</title>
+    <title>{% block title %}My To-Do App{% endblock %}</title>
+
+    <!-- Main CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Modern font (optional but recommended) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
+<!-- ================= HEADER / NAVBAR ================= -->
 <header>
     <div class="container">
         <h1>My To-Do App</h1>
@@ -15,7 +23,19 @@
             <a href="{{ url_for('tasks.view_tasks') }}">Home</a>
 
             {% if current_user.is_authenticated %}
-                <span class="nav-username">Hello, {{ current_user.username }}</span>
+                <span class="nav-username">
+                    👋 {{ current_user.username }}
+                </span>
+
+                <!-- Placeholder for Google status (future-ready) -->
+                {# 
+                {% if current_user.google_access_token %}
+                    <span class="badge badge-done">Google Connected</span>
+                {% else %}
+                    <a href="{{ url_for('google.connect_google') }}">Connect Google</a>
+                {% endif %}
+                #}
+
                 <a href="{{ url_for('auth.logout') }}">Logout</a>
             {% else %}
                 <a href="{{ url_for('auth.login') }}">Login</a>
@@ -25,22 +45,31 @@
     </div>
 </header>
 
+<!-- ================= MAIN CONTENT ================= -->
 <main>
     <div class="container">
 
+        <!-- Flash Messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% for category, message in messages %}
-                <div class="flash {{ category }}">{{ message }}</div>
-            {% endfor %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
         {% endwith %}
 
+        <!-- Page Content -->
         {% block content %}{% endblock %}
+
     </div>
 </main>
 
+<!-- ================= FOOTER ================= -->
 <footer>
     <div class="container">
-        <p>&copy; {{ current_year }} My Flask To-Do App</p>
+        <p>
+            &copy; {{ current_year }} • Built with Flask & Google Calendar API
+        </p>
     </div>
 </footer>
 

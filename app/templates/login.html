@@ -1,25 +1,56 @@
 {% extends "base.html" %}
-{% block title %}Login - To-Do App{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block content %}
+
 <div class="auth-box">
-    <h2>Login</h2>
+
+    <!-- Header -->
+    <div style="text-align:center; margin-bottom:24px;">
+        <h2 style="margin-bottom:6px;">Welcome back</h2>
+        <p style="color:#64748b; font-size:14px;">
+            Log in to manage your tasks and reminders
+        </p>
+    </div>
+
+    <!-- Login Form -->
     <form method="POST">
+
         <div class="form-group">
             <label for="username">Username</label>
-            <input id="username" name="username" type="text" required>
+            <input
+                id="username"
+                name="username"
+                type="text"
+                placeholder="Enter your username"
+                required
+                autofocus
+            >
         </div>
 
         <div class="form-group">
             <label for="password">Password</label>
-            <input id="password" name="password" type="password" required>
+            <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Enter your password"
+                required
+            >
         </div>
 
-        <button type="submit" class="btn">Login</button>
+        <button type="submit" class="btn">
+            Login
+        </button>
 
-        <p class="auth-link">
-            New here? <a href="{{ url_for('auth.register') }}">Create an account</a>.
-        </p>
     </form>
+
+    <!-- Footer -->
+    <div class="auth-link">
+        New here?
+        <a href="{{ url_for('auth.register') }}">Create an account</a>
+    </div>
+
 </div>
+
 {% endblock %}

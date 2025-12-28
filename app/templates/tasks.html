@@ -2,127 +2,211 @@
 {% block title %}Your Tasks{% endblock %}
 
 {% block content %}
-<div class="task-box">
-    <h2>Your Tasks</h2>
 
-    <!-- Add Task Form -->
-    <form action="{{ url_for('tasks.add_task') }}" method="post" class="task-form">
-        <input type="text" name="title" placeholder="Task Title" required>
+<div class="task-box">
+
+    <!-- ================= HEADER ================= -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+        <h2 style="margin:0;">Your Tasks</h2>
+
+        {# Future-ready Google status #}
+        
+        {% if current_user.google_access_token %}
+            <span class="badge badge-done">Google Connected</span>
+        {% else %}
+            <a href="{{ url_for('google.connect_google') }}" class="btn-small">
+                Connect Google
+            </a>
+        {% endif %}
+        
+    </div>
+
+    <!-- ================= ADD TASK ================= -->
+    <form action="{{ url_for('tasks.add_task') }}" method="POST" class="task-form">
+        <input
+            type="text"
+            name="title"
+            placeholder="What needs to be done?"
+            required
+        >
 
         <select name="priority">
-            <option value="Low"   {% if priority_filter == 'Low' %}selected{% endif %}>Low</option>
+            <option value="Low">Low</option>
             <option value="Medium" selected>Medium</option>
             <option value="High">High</option>
         </select>
 
         <input type="date" name="deadline">
-        <input type="time" name="time_slot" placeholder="HH:MM">
+        <input type="time" name="time_slot">
 
-
-        <button type="submit" class="btn">Add</button>
+        <button type="submit" class="btn">Add Task</button>
     </form>
 
-    <!-- Filters / Search -->
+    <!-- ================= FILTERS ================= -->
     <form method="GET" action="{{ url_for('tasks.view_tasks') }}" class="filter-form">
-        <input type="text" name="q" placeholder="Search..." value="{{ search or '' }}">
+        <input
+            type="text"
+            name="q"
+            placeholder="Search tasks..."
+            value="{{ search or '' }}"
+        >
 
-        <select name="status" onchange="this.form.submit()">
-            <option value="all"      {% if status_filter == 'all' %}selected{% endif %}>All Status</option>
-            <option value="Pending"  {% if status_filter == 'Pending' %}selected{% endif %}>Pending</option>
-            <option value="Working"  {% if status_filter == 'Working' %}selected{% endif %}>Working</option>
-            <option value="Completed"{% if status_filter == 'Completed' %}selected{% endif %}>Completed</option>
+        <select name="status">
+            <option value="all">All Status</option>
+            <option value="Pending"   {% if status_filter == 'Pending' %}selected{% endif %}>Pending</option>
+            <option value="Working"   {% if status_filter == 'Working' %}selected{% endif %}>Working</option>
+            <option value="Completed" {% if status_filter == 'Completed' %}selected{% endif %}>Completed</option>
         </select>
 
-        <select name="priority" onchange="this.form.submit()">
-            <option value="all"      {% if priority_filter == 'all' %}selected{% endif %}>All Priority</option>
-            <option value="Low"      {% if priority_filter == 'Low' %}selected{% endif %}>Low</option>
-            <option value="Medium"   {% if priority_filter == 'Medium' %}selected{% endif %}>Medium</option>
-            <option value="High"     {% if priority_filter == 'High' %}selected{% endif %}>High</option>
+        <select name="priority">
+            <option value="all">All Priority</option>
+            <option value="Low"    {% if priority_filter == 'Low' %}selected{% endif %}>Low</option>
+            <option value="Medium" {% if priority_filter == 'Medium' %}selected{% endif %}>Medium</option>
+            <option value="High"   {% if priority_filter == 'High' %}selected{% endif %}>High</option>
         </select>
 
         <button type="submit" class="btn-small">Apply</button>
     </form>
 
+    <!-- ================= CLEAR ALL ================= -->
     {% if tasks %}
-    <form method="POST" action="{{ url_for('tasks.clear_tasks') }}">
-        <button type="submit" class="btn btn-clear">Clear All Tasks</button>
-    </form>
+        <form method="POST" action="{{ url_for('tasks.clear_tasks') }}" style="margin-bottom:20px;">
+            <button type="submit" class="btn btn-clear">
+                Clear All Tasks
+            </button>
+        </form>
+    {% endif %}
 
-    <br>
+    <!-- ================= TASK LIST ================= -->
+    {% if tasks %}
+        <table class="task-table">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Change</th>
+                    <th>Edit Task</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
 
-    <table class="task-table">
-        <thead>
-        <tr>
-            <th>Task</th>
-            <th>Status</th>
-            <th>Priority</th>
-            <th>Deadline</th>
-            <th>Time Slot</th>
-            <th>Change</th>
-            <th>Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for task in tasks %}
-            <tr>
+            <tbody>
+            {% for task in tasks %}
+
+            <!-- ================= VIEW ROW ================= -->
+            <tr id="view-{{ task.id }}">
                 <td>{{ task.title }}</td>
 
                 <td>
-                    <span class="badge
-                        {% if task.status == 'Pending' %} badge-pending
-                        {% elif task.status == 'Working' %} badge-working
-                        {% elif task.status == 'Completed' %} badge-done
-                        {% endif %}
-                    ">
-                        {{ task.status }}
-                    </span>
-                </td>
-
-                <td>
-                    <span class="badge
-                        {% if task.priority == 'Low' %} badge-low
-                        {% elif task.priority == 'Medium' %} badge-medium
-                        {% else %} badge-high
-                        {% endif %}
-                    ">
-                        {{ task.priority }}
-                    </span>
-                </td>
-
-                <td>
-                    {% if task.deadline %}
-                        {{ task.deadline.strftime('%d %b %Y') }}
+                    {% if task.status == 'Pending' %}
+                        <span class="badge badge-pending">Pending</span>
+                    {% elif task.status == 'Working' %}
+                        <span class="badge badge-working">Working</span>
                     {% else %}
-                        -
+                        <span class="badge badge-done">Completed</span>
                     {% endif %}
                 </td>
 
                 <td>
-                    {% if task.time_slot %}
-                        {{ task.time_slot.strftime('%I:%M %p') }}
+                    {% if task.priority == 'Low' %}
+                        <span class="badge badge-low">Low</span>
+                    {% elif task.priority == 'Medium' %}
+                        <span class="badge badge-medium">Medium</span>
                     {% else %}
-                        
+                        <span class="badge badge-high">High</span>
                     {% endif %}
                 </td>
 
+                <td>{{ task.deadline.strftime('%d %b %Y') if task.deadline else '-' }}</td>
+                <td>{{ task.time_slot.strftime('%I:%M %p') if task.time_slot else '-' }}</td>
+
                 <td>
-                    <form action="{{ url_for('tasks.toggle_status', task_id=task.id) }}" method="POST">
-                        <button class="btn-small" type="submit">Next</button>
+                    <form action="{{ url_for('tasks.toggle_status', task_id=task.id) }}" method="POST" style="display:inline;">
+                        <button class="btn-small" type="submit">
+                            Next
+                        </button>
                     </form>
+                </td>
+
+                <td>
+                    <button class="btn-small btn-edit" onclick="toggleEdit({{ task.id }})">
+                        Edit
+                    </button>
                 </td>
 
                 <td>
                     <form action="{{ url_for('tasks.delete_task', task_id=task.id) }}" method="POST">
-                        <button class="btn-small btn-delete" type="submit">Delete</button>
+                        <button class="btn-small btn-delete">Delete</button>
                     </form>
                 </td>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+
+            <!-- ================= EDIT ROW ================= -->
+            <tr id="edit-{{ task.id }}" style="display:none;">
+                <form method="POST" action="{{ url_for('tasks.edit_task', task_id=task.id) }}">
+                    <td>
+                        <input type="text" name="title" value="{{ task.title }}" required>
+                    </td>
+
+                    <td>
+                        <select name="priority">
+                            <option value="Low"    {% if task.priority == 'Low' %}selected{% endif %}>Low</option>
+                            <option value="Medium" {% if task.priority == 'Medium' %}selected{% endif %}>Medium</option>
+                            <option value="High"   {% if task.priority == 'High' %}selected{% endif %}>High</option>
+                        </select>
+                    </td>
+
+                    <td colspan="1"></td>
+
+                    <td>
+                        <input type="date" name="deadline" value="{{ task.deadline }}">
+                    </td>
+
+                    <td>
+                        <input type="time" name="time_slot" value="{{ task.time_slot }}">
+                    </td>
+
+                    <td>
+                        <button type="submit" class="btn-small">
+                            Save
+                        </button>
+                    </td>
+
+                    <td>
+                        <button type="button" class="btn-small" onclick="toggleEdit({{ task.id }})">
+                            Cancel
+                        </button>
+                    </td>
+                </form>
+            </tr>
+
+            {% endfor %}
+            </tbody>
+
+        </table>
 
     {% else %}
-        <p>No tasks available. Add a new task above.</p>
+        <!-- ================= EMPTY STATE ================= -->
+        <div style="text-align:center; padding:48px 0; color:#64748b;">
+            <h3>No tasks yet</h3>
+            <p>Add your first task and start organizing your day.</p>
+        </div>
     {% endif %}
+
 </div>
+
+<script>
+function toggleEdit(taskId) {
+    const viewRow = document.getElementById(`view-${taskId}`);
+    const editRow = document.getElementById(`edit-${taskId}`);
+
+    viewRow.style.display = viewRow.style.display === "none" ? "" : "none";
+    editRow.style.display = editRow.style.display === "none" ? "" : "none";
+}
+</script>
+
+
 {% endblock %}

@@ -1,130 +1,117 @@
-# 📝 Flask To-Do App (User Auth + Priority + Deadlines + Search & Filter)
+```
+# 📝 Flask To-Do App with Google Calendar Sync
 
-A full-stack task management application built using **Flask**, featuring user authentication, task organization, priority management, deadlines, filters, and time slot scheduling.  
-The application is fully deployed and live on the internet.
-
----
-
-## 🚀 Live Demo
-
-🔗 https://flask-todo-app-9fms.onrender.com
-
-> Register a new user and start managing your tasks instantly.
+A complete To-Do task manager web application built using Flask.  
+It includes secure authentication, task priority management, deadline selection, task search, filters, and status tracking for each user.
 
 ---
 
-## ✨ Features
+## 🚀 Key Features
 
-✔ User register & login system  
-✔ Add tasks with:
-- Title  
-- Priority (High / Medium / Low)  
-- Deadline (date)  
-- Time Slot (HH:MM AM/PM)  
-- Status (Pending → Working → Completed)
+### 👤 User Authentication
+- User registration and login system
+- Password hashing (safe storage, no plain text)
+- Logout functionality
+- Each user sees only **their own tasks**
 
-✔ Filter tasks by:
-- Status  
-- Priority  
-- Search text
+### ✔ Task Management
+- Add new tasks
+- Delete individual tasks
+- Clear all tasks for a user
+- Change task status (Pending → Working → Completed)
+- Automatic created date storage
 
-✔ Change task status using **Next** button  
-✔ Delete individual tasks  
-✔ Clear all tasks  
-✔ Flash message notifications  
-✔ Responsive UI with custom CSS styling  
-✔ SQLite database with SQLAlchemy ORM  
-✔ Deployed using Gunicorn on Render
+### 🏷 Task Attributes
+- Priority (Low / Medium / High)
+- Optional deadline (date)
+- Visual badge colors for task status & priority
 
----
-
-## 🛠️ Tech Stack
-
-### Backend
-- Python 3
-- Flask
-- SQLAlchemy
-- Flask-Login
-
-### Frontend
-- HTML5
-- CSS3
-- Jinja2 Template Engine
-
-### Deployment
-- Render.com
-- Gunicorn
-- Requirements.txt
-- Procfile
+### 🔍 Search & Filter
+- Search tasks by name
+- Filter by status
+- Filter by priority
+- Combine both filters together
 
 ---
 
-## 📁 Project Structure
+## 🗂 Project Structure
 
 ```
-project/
-│   run.py
-│
-└───app/
-    │   __init__.py
-    │   models.py
-    │
-    └───routes/
-    │    │   auth.py
-    │    │   tasks.py
-    │
-    └───templates/
-    │    │   base.html
-    │    │   login.html
-    │    │   register.html
-    │    │   tasks.html
-    │
-    └───static/
-         └───css/style.css
-         └───js/script.js
-```
+
+Flask-ToDo-App/
+├── run.py
+├── requirements.txt
+├── Procfile
+├── .env
+├── app/
+│   ├── **init**.py
+│   ├── extensions.py
+│   ├── models.py
+│   ├── routes/
+│   │   ├── auth.py
+│   │   ├── tasks.py
+│   │   └── google.py
+│   ├── templates/
+│   │   ├── base.html
+│   │   ├── login.html
+│   │   ├── register.html
+│   │   └── tasks.html
+│   └── static/
+│       ├── css/style.css
+│       └── js/script.js
+└── instance/
+└── todo.db
+
+````
 
 ---
 
-## 🚀 Installation & Setup
+## ⚙️ Installation & Setup
 
-### 1️⃣ Clone the repository
-
+### 1️⃣ Clone Repository
 ```bash
 git clone https://github.com/bhrigu136/Flask-ToDo-App.git
 cd Flask-ToDo-App
-```
+````
 
-### 2️⃣ Create a virtual environment (recommended)
+### 2️⃣ Create Virtual Environment
 
 ```bash
 python -m venv venv
 venv\Scripts\activate        # Windows
-# source venv/bin/activate   # Mac/Linux
+# source venv/bin/activate   # macOS/Linux
 ```
 
-### 3️⃣ Install dependencies
+### 3️⃣ Install Dependencies
 
 ```bash
-pip install flask flask_sqlalchemy flask_login werkzeug
+pip install -r requirements.txt
 ```
 
-### 4️⃣ Remove old database (if it exists)
+### 4️⃣ Configure Environment Variables
 
-```bash
-del todo.db
+Create a `.env` file:
+
+```env
+SECRET_KEY=your_secret_key
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
 ```
 
-### 5️⃣ Run the application
+⚠️ **Never commit Google credentials to GitHub.**
 
-```bash
+---
+
+### 5️⃣ Run the App
+
+```
 python run.py
 ```
 
-### 6️⃣ Open in browser
+Open:
 
 ```
-http://127.0.0.1:5000/
+http://127.0.0.1:5000
 ```
 
 ---
@@ -138,11 +125,29 @@ http://127.0.0.1:5000/
 
 ---
 
-## ✍️ Author
+## 🌍 Deployment
+
+* Deployed using **Gunicorn**
+* Render-ready (`Procfile` included)
+* SQLite for simplicity (can be swapped with PostgreSQL)
+
+---
+
+## 🧪 Tech Stack
+
+* **Backend:** Flask, SQLAlchemy
+* **Auth:** Flask-Login
+* **Frontend:** HTML, CSS, Vanilla JS
+* **Database:** SQLite
+* **API:** Google Calendar API
+* **Deployment:** Render + Gunicorn
+
+---
+
+## 👩‍💻 Author
 
 **Tamanna Bhrigunath**  
 B.Tech – Poornima College of Engineering (2026)
-Python & Data Science Enthusiast
 
 - 💻 GitHub: https://github.com/bhrigu136  
 - 🔗 LinkedIn: https://linkedin.com/in/tamanna-bhrigunath-578b43190  
@@ -157,5 +162,3 @@ If you like this project, please:
 - ⭐ Star the repository  
 - 🍴 Fork it  
 - 🐛 Create an issue if something breaks  
-
-# Working on it...
