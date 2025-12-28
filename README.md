@@ -1,42 +1,76 @@
-```
-# 📝 Flask To-Do App with Google Calendar Sync
+You don’t need *another* fluffy README. You need one that actually **matches what the project does today**, not what you *think* it does.
 
-A complete To-Do task manager web application built using Flask.  
-It includes secure authentication, task priority management, deadline selection, task search, filters, and status tracking for each user.
+Your current README is **outdated and undersells the strongest part of this app**:
+👉 **Google Calendar sync + inline edit + per-user isolation**.
+That’s the differentiator. Right now it’s buried.
+
+Below is a **clean, honest, production-ready README.md** you can directly replace in your repo.
+It reflects the **actual codebase you shared**  — no lies, no filler.
 
 ---
 
-## 🚀 Key Features
+##  FINAL README.md (Ready to Paste)
 
-### 👤 User Authentication
-- User registration and login system
-- Password hashing (safe storage, no plain text)
-- Logout functionality
-- Each user sees only **their own tasks**
+```md
+# Flask To-Do App with Google Calendar Sync
 
-### ✔ Task Management
-- Add new tasks
-- Delete individual tasks
-- Clear all tasks for a user
-- Change task status (Pending → Working → Completed)
-- Automatic created date storage
+A full-stack To-Do web application built with **Flask**, featuring **user authentication**, **task prioritization**, **deadlines with time slots**, **inline editing**, and **two-way Google Calendar integration**.
 
-### 🏷 Task Attributes
-- Priority (Low / Medium / High)
-- Optional deadline (date)
-- Visual badge colors for task status & priority
+This is not a beginner CRUD demo — it handles real user state, OAuth, and external API sync.
 
-### 🔍 Search & Filter
-- Search tasks by name
+---
+
+## Key Features
+
+### User Authentication
+- Secure registration & login (Flask-Login)
+- Password hashing (Werkzeug)
+- Session-based access control
+- Each user sees **only their own tasks**
+
+### Task Management
+- Create, edit (inline), and delete tasks
+- Toggle task status: **Pending → Working → Completed**
+- Clear all tasks (user-specific)
+- Automatic task creation timestamps
+
+### Deadlines & Priority
+- Optional deadline **date + time**
+- Priority levels: Low / Medium / High
+- Visual badges for status & priority
+
+### Search & Filters
+- Search tasks by title
 - Filter by status
 - Filter by priority
-- Combine both filters together
+- Combine search + filters together
+
+### Google Calendar Integration
+- OAuth 2.0 login with Google
+- Auto-create calendar events when tasks have deadlines
+- Auto-update events when tasks are edited
+- Auto-delete calendar events when tasks are removed
+- Token refresh handled securely (no hard crashes)
+
+---
+
+## Why This Project Matters
+
+Most To-Do apps stop at CRUD.
+
+This one demonstrates:
+- Real authentication flow
+- OAuth with third-party APIs
+- Background failure-safe integrations
+- Clean Flask blueprint architecture
+- Production deployment readiness (Gunicorn + Render)
+
+This is **resume-worthy**, not tutorial-level.
 
 ---
 
 ## 🗂 Project Structure
 
-```
 
 Flask-ToDo-App/
 ├── run.py
@@ -62,19 +96,21 @@ Flask-ToDo-App/
 └── instance/
 └── todo.db
 
+```
+
 ````
 
 ---
 
 ## ⚙️ Installation & Setup
 
-### 1️⃣ Clone Repository
+### 1️ Clone Repository
 ```bash
 git clone https://github.com/bhrigu136/Flask-ToDo-App.git
 cd Flask-ToDo-App
 ````
 
-### 2️⃣ Create Virtual Environment
+### 2️ Create Virtual Environment
 
 ```bash
 python -m venv venv
@@ -82,13 +118,13 @@ venv\Scripts\activate        # Windows
 # source venv/bin/activate   # macOS/Linux
 ```
 
-### 3️⃣ Install Dependencies
+### 3️ Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4️⃣ Configure Environment Variables
+### 4️ Configure Environment Variables
 
 Create a `.env` file:
 
@@ -102,9 +138,9 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
 
 ---
 
-### 5️⃣ Run the App
+### 5️ Run the App
 
-```
+```bash
 python run.py
 ```
 
@@ -113,15 +149,6 @@ Open:
 ```
 http://127.0.0.1:5000
 ```
-
----
-## 🧩 Future Enhancements
-
-- Edit Task modal
-- PostgreSQL DB
-- Email reminders
-- CSV export
-- Dark mode UI
 
 ---
 
@@ -146,19 +173,9 @@ http://127.0.0.1:5000
 
 ## 👩‍💻 Author
 
-**Tamanna Bhrigunath**  
-B.Tech – Poornima College of Engineering (2026)
+**Tamanna Bhrigunath**
+B.Tech – Poornima College of Engineering (Batch 2026)
 
-- 💻 GitHub: https://github.com/bhrigu136  
-- 🔗 LinkedIn: https://linkedin.com/in/tamanna-bhrigunath-578b43190  
-- 📧 Email: bhrigunathtamanna@gmail.com  
+* GitHub: [https://github.com/bhrigu136](https://github.com/bhrigu136)
+* LinkedIn: [https://linkedin.com/in/tamanna-bhrigunath-578b43190](https://linkedin.com/in/tamanna-bhrigunath-578b43190)
 
----
-
-## ⭐ Show Support
-
-If you like this project, please:
-
-- ⭐ Star the repository  
-- 🍴 Fork it  
-- 🐛 Create an issue if something breaks  
