@@ -1,5 +1,3 @@
-
-```md
 # Flask To-Do App with Google Calendar Sync
 
 A full-stack To-Do web application built with **Flask**, featuring **user authentication**, **task prioritization**, **deadlines with time slots**, **inline editing**, and **two-way Google Calendar integration**.
@@ -58,7 +56,7 @@ This is **resume-worthy**, not tutorial-level.
 ---
 
 ## 🗂 Project Structure
-
+```md
 
 Flask-ToDo-App/
 ├── run.py
@@ -86,7 +84,7 @@ Flask-ToDo-App/
 
 ```
 
-````
+
 
 ---
 
