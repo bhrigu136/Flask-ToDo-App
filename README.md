@@ -1,8 +1,8 @@
-# Flask To-Do App with Google Calendar Sync
+# Task Management App with Google Calendar Sync
 
-A full-stack To-Do web application built with **Flask**, featuring **user authentication**, **task prioritization**, **deadlines with time slots**, **inline editing**, and **two-way Google Calendar integration**.
-
-This is not a beginner CRUD demo — it handles real user state, OAuth, and external API sync.
+This project is a multi-user task management backend system built using Flask.
+It supports secure authentication, task prioritization, deadlines, search and filtering, and integrates with Google Calendar via OAuth 2.0 to automatically sync task deadlines as calendar events.
+I focused on backend architecture, data isolation per user, and handling third-party API failures gracefully, rather than just CRUD.
 
 ---
 
@@ -58,7 +58,7 @@ This is **resume-worthy**, not tutorial-level.
 ## 🗂 Project Structure
 ```md
 
-Flask-ToDo-App/
+Task-Management-App/
 ├── run.py
 ├── requirements.txt
 ├── Procfile
@@ -92,8 +92,8 @@ Flask-ToDo-App/
 
 ### 1️ Clone Repository
 ```bash
-git clone https://github.com/bhrigu136/Flask-ToDo-App.git
-cd Flask-ToDo-App
+git clone https://github.com/bhrigu136/Task-Management-App.git
+cd Task-Management-App
 ````
 
 ### 2️ Create Virtual Environment
